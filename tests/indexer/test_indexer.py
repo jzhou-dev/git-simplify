@@ -6,9 +6,9 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from compass.indexer.file_filter import FileFilter
-from compass.indexer.language_detector import LanguageDetector
-from compass.indexer.repository_scanner import RepositoryScanner
+from git_simplify.indexer.file_filter import FileFilter
+from git_simplify.indexer.language_detector import LanguageDetector
+from git_simplify.indexer.repository_scanner import RepositoryScanner
 
 
 class RecordingParser:

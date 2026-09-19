@@ -9,7 +9,7 @@ from tree_sitter import Language
 
 
 class UnsupportedLanguageError(ValueError):
-    """Raised when Compass has no configured grammar for a language."""
+    """Raised when git-simplify has no configured grammar for a language."""
 
 
 # The values identify the grammar package and its language factory. TypeScript

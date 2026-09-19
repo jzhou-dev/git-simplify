@@ -6,7 +6,7 @@ import tempfile
 import unittest
 from pathlib import Path
 
-from compass.parser import (
+from git_simplify.parser import (
     SyntaxParser,
     TreeSitterManager,
     UnsupportedLanguageError,

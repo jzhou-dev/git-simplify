@@ -1,0 +1,2 @@
+"""git-simplify configuration components."""
+

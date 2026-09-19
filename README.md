@@ -1,6 +1,6 @@
-# Compass
+# git-simplify
 
-Compass is a web application that analyzes a software repository and builds an interactive map of how its files, modules, functions, classes, and APIs relate to one another.
+git-simplify is a web application that analyzes a software repository and builds an interactive map of how its files, modules, functions, classes, and APIs relate to one another.
 
 Users will be able to connect a Git repository or drag and drop source files for analysis. The project is currently scaffolded; the architecture and interfaces are being established before implementing the analysis pipeline.
 
@@ -28,7 +28,7 @@ Users will be able to connect a Git repository or drag and drop source files for
 
 ## How it works
 
-Compass processes a repository through the following pipeline:
+git-simplify processes a repository through the following pipeline:
 
 ```text
 Repository
@@ -57,16 +57,16 @@ JSON / Graph / Interactive Output
 ## Project architecture
 
 ```text
-frontend/       Browser application and interactive visualization
-backend/        REST API and analysis orchestration
-src/compass/    Shared analysis pipeline and graph domain
-├── indexer/    Repository scanning and file filtering
-├── parser/     Tree-sitter parser and grammar management
-├── extractor/  Imports, symbols, calls, and APIs
-├── graph/      Graph models and construction
-├── analysis/   Relationship analysis and symbol resolution
-├── output/     JSON, graph, and interactive exporters
-└── config/     Project configuration
+frontend/         Browser application and interactive visualization
+backend/          REST API and analysis orchestration
+src/git_simplify/  Shared analysis pipeline and graph domain
+├── indexer/      Repository scanning and file filtering
+├── parser/       Tree-sitter parser and grammar management
+├── extractor/    Imports, symbols, calls, and APIs
+├── graph/        Graph models and construction
+├── analysis/     Relationship analysis and symbol resolution
+├── output/       JSON, graph, and interactive exporters
+└── config/       Project configuration
 ```
 
 ### Core graph model
@@ -123,7 +123,7 @@ The frontend will consume this API, while the backend will coordinate ingestion,
 
 ## Output formats
 
-Compass is designed to support several output targets:
+git-simplify is designed to support several output targets:
 
 - JSON for integrations and downstream tooling
 - DOT, Mermaid, or similar graph formats
@@ -135,12 +135,12 @@ The analysis model will remain independent from the eventual frontend so that a 
 ## Repository layout
 
 ```text
-compass/
-├── frontend/     Browser application scaffold
-├── backend/      REST API scaffold
-├── src/compass/  Core analysis pipeline
-├── tests/        Parser, extractor, graph, and integration tests
-├── docs/         Architecture and design documentation
+git-simplify/
+├── frontend/        Browser application scaffold
+├── backend/         REST API scaffold
+├── src/git_simplify/  Core analysis pipeline
+├── tests/           Parser, extractor, graph, and integration tests
+├── docs/            Architecture and design documentation
 ├── pyproject.toml
 └── README.md
 ```

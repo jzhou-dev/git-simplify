@@ -4,13 +4,13 @@ from __future__ import annotations
 
 import unittest
 
-from compass.extractor import (
+from git_simplify.extractor import (
     ApiExtractor,
     CallExtractor,
     ImportExtractor,
     SymbolExtractor,
 )
-from compass.parser import SyntaxParser
+from git_simplify.parser import SyntaxParser
 
 
 class ExtractorTests(unittest.TestCase):
@@ -54,7 +54,7 @@ class ExtractorTests(unittest.TestCase):
 
     def test_extracts_python_calls(self) -> None:
         result = self.parser.parse(
-            "def greet(name):\n    return name\n\nprint(greet('Compass'))\n",
+            "def greet(name):\n    return name\n\nprint(greet('git-simplify'))\n",
             "python",
         )
 

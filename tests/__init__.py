@@ -1,2 +1,2 @@
-"""Compass test package."""
+"""git-simplify test package."""
 

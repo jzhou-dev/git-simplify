@@ -1,2 +1,0 @@
-"""Compass repository analysis package."""
-
