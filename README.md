@@ -156,4 +156,6 @@ git-simplify/
 
 ## Current status
 
-The repository contains empty frontend and backend scaffolds, the initial Python analysis package, analysis modules, output modules, test directories, and architecture documentation. Feature implementation is planned for the phases above.
+Repository scanning, Tree-sitter parsing, extraction, and project analysis are implemented. Analysis includes best-effort static import/call resolution, dependency queries, cycle detection, and serializable results. The frontend, backend, graph rendering, and output modules remain scaffolds.
+
+See [the analysis API and limitations](docs/architecture.md#analysis-api). Run the test suite with `python -m unittest discover -v` after installing the package.
