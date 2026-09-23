@@ -67,3 +67,61 @@ languages are skipped using the existing scanner behavior. File read errors
 propagate. File symlinks outside the repository are skipped. Graph rendering,
 REST/MCP endpoints, incremental caching, and runtime symbol inference remain
 separate work.
+
+## Graph API
+
+`git_simplify.graph.build_graph()` converts an existing `ProjectAnalysis` into a
+`DependencyGraph`. It does not scan or parse the repository again.
+
+```python
+import json
+from git_simplify.analysis import analyze_project
+from git_simplify.graph import build_graph, graph_id
+
+graph = build_graph(analyze_project("."))
+file_id = graph_id("file", "src/git_simplify/analysis/project_analyzer.py")
+for dependency_id in graph.dependencies_of(file_id, transitive=True):
+    print(graph.get_node(dependency_id).path)
+print(graph.find_cycles())
+print(json.dumps(graph.to_dict(), indent=2))
+```
+
+The graph includes repository, directory, file, declaration, API and reference
+nodes. Declaration kinds retain the extractor's function/class/method/variable
+labels. `SourceLocation` stores zero-based, end-exclusive ranges. Node paths are
+repository-relative; the repository node retains the absolute root as metadata.
+
+- `contains` connects the repository/directory hierarchy to files.
+- `defines` connects each file to its declarations and API routes.
+- `imports` and `exports` retain individual import/re-export occurrences.
+- `calls` connects a source file to the resolved declaration. **The source is a
+  file, not an inferred caller function.** Unresolved calls point to references.
+- `depends_on` aggregates resolved imports/re-exports into one edge per file
+  pair. Calls do not create file dependency edges.
+
+Unresolved and ambiguous targets become occurrence-specific `reference` nodes;
+edge status and metadata retain the original finding. They are not presumed to
+be external packages. The graph inherits all analysis resolution limitations.
+It does not infer inheritance, lexical ownership, API handlers, or module nodes
+separate from files.
+
+`nodes` and `edges` return sorted record tuples. `get_node(id)`, `get_edge(id)`,
+`outgoing(id, kind=...)`, and `incoming(id, kind=...)` provide indexed lookups.
+`dependencies_of()` and `dependents_of()` return node IDs and accept
+`transitive=True` and an edge `kind` (default `depends_on`). Traversal follows
+resolved edges only. Transitive queries exclude their starting node; direct
+queries retain self-loops. Unknown IDs raise `KeyError`.
+
+`find_cycles(kind="depends_on")` returns sorted strongly connected cycle groups,
+including self-loops. Traversals are iterative and support long chains without
+recursion. `to_dict()` returns detached, JSON-compatible `nodes` and `edges`
+lists for downstream renderers and APIs.
+
+IDs are deterministic hashes of record identity, independent of insertion order
+and checkout root. Source coordinates contribute to declaration/reference IDs,
+so editing code can change those IDs. Distinct source occurrences retain
+separate edges. Re-adding identical records is idempotent; conflicting IDs,
+dangling edges, invalid source ranges and non-JSON metadata are rejected.
+Storage and query boundaries copy metadata to protect graph integrity. Builders
+create a fresh graph for each snapshot, including a repository node for empty
+projects.

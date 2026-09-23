@@ -156,6 +156,6 @@ git-simplify/
 
 ## Current status
 
-Repository scanning, Tree-sitter parsing, extraction, and project analysis are implemented. Analysis includes best-effort static import/call resolution, dependency queries, cycle detection, and serializable results. The frontend, backend, graph rendering, and output modules remain scaffolds.
+Repository scanning, Tree-sitter parsing, extraction, project analysis, and graph construction are implemented. Analysis includes best-effort static import/call resolution, dependency queries, cycle detection, and serializable results. The graph supports stable IDs, source metadata, dependency traversal, cycle detection, and JSON-compatible node/edge export. The frontend, backend, graph rendering, and output modules remain scaffolds.
 
-See [the analysis API and limitations](docs/architecture.md#analysis-api). Run the test suite with `python -m unittest discover -v` after installing the package.
+See [the analysis API and limitations](docs/architecture.md#analysis-api) and [graph API](docs/architecture.md#graph-api). Run the test suite with `python -m unittest discover -v` after installing the package.
